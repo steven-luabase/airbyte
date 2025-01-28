@@ -41,15 +41,8 @@ definitions:
           type: MinMaxDatetime
           datetime: "{{ format_datetime( max(config.get('replication_start_date', (now_utc() - duration('P730D')).strftime('%Y-%m-%dT%H:%M:%SZ') ), (now_utc() - duration('P730D')).strftime('%Y-%m-%dT%H:%M:%SZ')), '%Y-%m-%dT%H:%M:%SZ') }}"
           datetime_format: "%Y-%m-%dT%H:%M:%SZ"
-        end_datetime:
-          type: MinMaxDatetime
-          datetime: "{{ format_datetime(config.get('replication_end_date', now_utc()), '%Y-%m-%dT%H:%M:%SZ') }}"
-          datetime_format: "%Y-%m-%dT%H:%M:%SZ"
         start_time_option:
           field_name: LastUpdatedAfter
-          inject_into: request_parameter
-        end_time_option:
-          field_name: LastUpdatedBefore
           inject_into: request_parameter
       retriever:
         type: SimpleRetriever
@@ -61,6 +54,10 @@ definitions:
             content-type: "application/json"
           request_parameters:
             MarketplaceIds: '{{ config["marketplace_id"] }}'
+            # We should only include the optional replication_end_date when specified. Specifying too large of a
+            # date range sometimes causes the API to return a 400 error. Not including LastUpdatedBefore in requests
+            # to the API retrieves all records beginning after LastUpdatedAfter in a more reliable way than now()
+            LastUpdatedBefore: "{{ format_datetime(config.get('replication_end_date', now_utc()), '%Y-%m-%dT%H:%M:%SZ') if config.get('replication_end_date') and next_page_token is None else '' }}"
           error_handler:
             type: CompositeErrorHandler
             error_handlers:
