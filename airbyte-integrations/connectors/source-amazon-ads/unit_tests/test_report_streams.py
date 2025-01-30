@@ -9,7 +9,6 @@ from datetime import timedelta
 from functools import partial
 from unittest import mock
 
-import pendulum
 import pytest
 import requests_mock
 import responses
@@ -19,7 +18,7 @@ from pytest import raises
 from requests.exceptions import ConnectionError
 from source_amazon_ads.streams import SponsoredBrandsV3ReportStream, SponsoredDisplayReportStream, SponsoredProductsReportStream
 from source_amazon_ads.streams.report_streams.report_stream_models import RecordType
-from source_amazon_ads.streams.report_streams.report_streams import ReportGenerationFailure, ReportGenerationInProgress, TooManyRequests
+from source_amazon_ads.streams.report_streams.report_streams import ReportGenerationFailure, ReportGenerationInProgress
 
 from airbyte_cdk import AirbyteTracedException
 from airbyte_cdk.models import SyncMode

@@ -3,7 +3,6 @@
 #
 
 
-import math
 import urllib.parse
 from datetime import datetime, timedelta
 from typing import Any, List, Mapping, Optional
@@ -366,7 +365,7 @@ class TestSemiIncrementalKlaviyoStream:
     )
     def test_read_records(self, start_date, stream_state, input_records, expected_records, requests_mock):
         stream = get_stream_by_name("metrics", CONFIG | {"start_date": start_date})
-        requests_mock.register_uri("GET", f"https://a.klaviyo.com/api/metrics", status_code=200, json={"data": input_records})
+        requests_mock.register_uri("GET", "https://a.klaviyo.com/api/metrics", status_code=200, json={"data": input_records})
         stream.stream_state = {stream.cursor_field: stream_state if stream_state else start_date}
         records = get_records(stream=stream, sync_mode=SyncMode.incremental)
         assert records == expected_records
@@ -391,7 +390,7 @@ class TestProfilesStream:
                 },
             ],
         }
-        requests_mock.register_uri("GET", f"https://a.klaviyo.com/api/profiles", status_code=200, json=json)
+        requests_mock.register_uri("GET", "https://a.klaviyo.com/api/profiles", status_code=200, json=json)
 
         records = get_records(stream=stream)
         assert records == [
@@ -432,7 +431,7 @@ class TestGlobalExclusionsStream:
                 },
             ],
         }
-        requests_mock.register_uri("GET", f"https://a.klaviyo.com/api/profiles", status_code=200, json=json)
+        requests_mock.register_uri("GET", "https://a.klaviyo.com/api/profiles", status_code=200, json=json)
 
         records = get_records(stream=stream)
         assert records == [

@@ -7,14 +7,14 @@ import os
 import textwrap
 import time
 import webbrowser
-from collections.abc import AsyncGenerator, AsyncIterable, Callable, Generator, Iterable
+from collections.abc import AsyncIterable, Callable, Generator, Iterable
 from itertools import product
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
 import dagger
 import pytest
-from airbyte_protocol.models import AirbyteCatalog, AirbyteStateMessage, ConfiguredAirbyteCatalog, ConnectorSpecification  # type: ignore
+from airbyte_protocol.models import ConfiguredAirbyteCatalog  # type: ignore
 from connection_retriever.audit_logging import get_user_email  # type: ignore
 from connection_retriever.retrieval import ConnectionNotFoundError, get_current_docker_image_tag  # type: ignore
 from rich.prompt import Confirm, Prompt
@@ -38,7 +38,6 @@ from live_tests.commons.secret_access import get_airbyte_api_key
 from live_tests.commons.segment_tracking import track_usage
 from live_tests.commons.utils import clean_up_artifacts
 from live_tests.report import PrivateDetailsReport, ReportState, TestReport
-from live_tests.utils import get_catalog, get_spec
 
 if TYPE_CHECKING:
     from _pytest.config import Config

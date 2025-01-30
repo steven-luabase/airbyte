@@ -4,7 +4,6 @@
 
 
 import logging
-from unittest.mock import patch
 
 import freezegun
 import pytest

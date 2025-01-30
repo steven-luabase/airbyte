@@ -104,7 +104,7 @@ def test_get_access_token(setup_client_class, has_refresh_token, token_response,
     if raises_exception:
         with pytest.raises(AirbyteTracedException) as exception:
             instance._get_access_token()
-        assert exception.value.message == f"Failed to acquire access token. Error: test_error. Error description: test_error_description."
+        assert exception.value.message == "Failed to acquire access token. Error: test_error. Error description: test_error_description."
     else:
         assert instance._get_access_token() == expected_result
 

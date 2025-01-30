@@ -128,7 +128,7 @@ class CheckDocumentationContent(DocumentationCheck):
 
 class CheckDocumentationLinks(CheckDocumentationContent):
     name = "Links used in connector documentation are valid"
-    description = f"The user facing connector documentation should update invalid links in connector documentation. For links that are used as example and return 404 status code, use `example: ` before link to skip it."
+    description = "The user facing connector documentation should update invalid links in connector documentation. For links that are used as example and return 404 status code, use `example: ` before link to skip it."
 
     def validate_links(self, connector: Connector) -> List[str]:
         errors = []
@@ -189,7 +189,7 @@ class CheckDocumentationHeadersOrder(CheckDocumentationContent):
     def description(self) -> str:
         ordered_headers = TemplateContent("CONNECTOR_NAME_FROM_METADATA").headers_with_tag()
         not_required_headers = [
-            f"Set up the CONNECTOR_NAME_FROM_METADATA connector in Airbyte",
+            "Set up the CONNECTOR_NAME_FROM_METADATA connector in Airbyte",
             "For Airbyte Cloud: (as subtitle of Set up CONNECTOR_NAME_FROM_METADATA)",
             "For Airbyte Open Source: (as subtitle of Set up CONNECTOR_NAME_FROM_METADATA)",
             self.CONNECTOR_SPECIFIC_HEADINGS + " (but this headers should be on a right place according to expected order)",
@@ -336,7 +336,7 @@ class CheckPrerequisitesSectionDescribesRequiredFieldsFromSpec(CheckDocumentatio
             # credentials has specific check for keywords as we have a lot of ways how to describe this step
             credentials_validation = [k in section_content for k in self.CREDENTIALS_KEYWORDS]
             if True not in credentials_validation:
-                missing_fields.append(f"credentials")
+                missing_fields.append("credentials")
 
         return missing_fields
 

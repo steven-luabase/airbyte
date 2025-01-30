@@ -7,7 +7,7 @@ from unittest import TestCase
 import freezegun
 from source_chargebee import SourceChargebee
 
-from airbyte_cdk.models import AirbyteStateBlob, ConfiguredAirbyteCatalog, FailureType, StreamDescriptor, SyncMode
+from airbyte_cdk.models import ConfiguredAirbyteCatalog, SyncMode
 from airbyte_cdk.test.catalog_builder import CatalogBuilder
 from airbyte_cdk.test.entrypoint_wrapper import EntrypointOutput, read
 from airbyte_cdk.test.mock_http import HttpMocker
@@ -15,18 +15,16 @@ from airbyte_cdk.test.mock_http.response_builder import (
     FieldPath,
     HttpResponseBuilder,
     NestedPath,
-    Path,
     RecordBuilder,
     create_record_builder,
     create_response_builder,
     find_template,
 )
-from airbyte_cdk.test.state_builder import StateBuilder
 
 from .config import ConfigBuilder
 from .pagination import ChargebeePaginationStrategy
 from .request_builder import ChargebeeRequestBuilder, ChargebeeSubstreamRequestBuilder
-from .response_builder import a_response_with_status, a_response_with_status_and_header
+from .response_builder import a_response_with_status
 
 
 _STREAM_NAME = "subscription_with_scheduled_changes"

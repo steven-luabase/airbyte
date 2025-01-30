@@ -2,7 +2,7 @@
 # Copyright (c) 2023 Airbyte, Inc., all rights reserved.
 #
 
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import Dict, List, Set, Union
 
 import yaml
 

@@ -22,7 +22,6 @@ from source_salesforce.streams import (
     CSV_FIELD_SIZE_LIMIT,
     BulkIncrementalSalesforceStream,
     BulkSalesforceStream,
-    BulkSalesforceSubStream,
     IncrementalRestSalesforceStream,
     RestSalesforceStream,
 )
@@ -143,7 +142,7 @@ def _prepare_mock(m, stream):
 
 
 def _bulk_stream_path() -> str:
-    return f"/services/data/v57.0/jobs/query"
+    return "/services/data/v57.0/jobs/query"
 
 
 def _get_result_id(stream):

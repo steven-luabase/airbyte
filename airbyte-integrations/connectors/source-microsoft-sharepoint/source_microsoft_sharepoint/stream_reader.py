@@ -273,7 +273,7 @@ class SourceMicrosoftSharePointStreamReader(AbstractFileBasedStreamReader):
 
         if not items_processed:
             raise AirbyteTracedException(
-                message=f"Drive is empty or does not exist.",
+                message="Drive is empty or does not exist.",
                 failure_type=FailureType.config_error,
             )
 

@@ -231,7 +231,7 @@ class SourceGoogleDriveStreamReader(AbstractFileBasedStreamReader):
             file_metadata = self.google_drive_service.files().get(fileId=file.id, fields="size", supportsAllDrives=True).execute()
             return int(file_metadata["size"])
         except KeyError:
-            raise ErrorFetchingMetadata(f"Size was expected in metadata response but was missing")
+            raise ErrorFetchingMetadata("Size was expected in metadata response but was missing")
         except Exception as e:
             raise ErrorFetchingMetadata(f"An error occurred while retrieving file size: {str(e)}")
 
