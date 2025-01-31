@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.airbyte.cdk.StreamIdentifier
 import io.airbyte.cdk.command.OpaqueStateValue
-import io.airbyte.cdk.discover.Field
+import io.airbyte.cdk.discover.FieldOrMetaField
 import io.airbyte.cdk.discover.MetaFieldDecorator
 import io.airbyte.cdk.output.OutputConsumer
 import io.airbyte.cdk.util.Jsons
@@ -75,12 +75,15 @@ sealed class FeedBootstrap<T : Feed>(
     private inner class EfficientStreamRecordConsumer(override val stream: Stream) :
         StreamRecordConsumer {
 
-        override fun accept(recordData: ObjectNode, changes: Map<Field, FieldValueChange>?) {
+        override fun accept(
+            recordData: ObjectNode,
+            changes: Map<FieldOrMetaField, FieldValueChange>?
+        ) {
             if (changes.isNullOrEmpty()) {
                 acceptWithoutChanges(recordData)
             } else {
                 val protocolChanges: List<AirbyteRecordMessageMetaChange> =
-                    changes.map { (field: Field, fieldValueChange: FieldValueChange) ->
+                    changes.map { (field: FieldOrMetaField, fieldValueChange: FieldValueChange) ->
                         AirbyteRecordMessageMetaChange()
                             .withField(field.id)
                             .withChange(fieldValueChange.protocolChange())
@@ -234,7 +237,7 @@ interface StreamRecordConsumer {
 
     val stream: Stream
 
-    fun accept(recordData: ObjectNode, changes: Map<Field, FieldValueChange>?)
+    fun accept(recordData: ObjectNode, changes: Map<FieldOrMetaField, FieldValueChange>?)
 }
 
 /**

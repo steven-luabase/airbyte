@@ -6,7 +6,7 @@ package io.airbyte.cdk.read.cdc
 
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.airbyte.cdk.command.OpaqueStateValue
-import io.airbyte.cdk.discover.Field
+import io.airbyte.cdk.discover.FieldOrMetaField
 import io.airbyte.cdk.read.FieldValueChange
 import io.airbyte.cdk.read.Stream
 import org.apache.kafka.connect.source.SourceRecord
@@ -76,5 +76,5 @@ interface CdcPartitionReaderDebeziumOperations<T : Comparable<T>> {
 /** [DeserializedRecord]s are used to generate Airbyte RECORD messages. */
 data class DeserializedRecord(
     val data: ObjectNode,
-    val changes: Map<Field, FieldValueChange>,
+    val changes: Map<FieldOrMetaField, FieldValueChange>,
 )

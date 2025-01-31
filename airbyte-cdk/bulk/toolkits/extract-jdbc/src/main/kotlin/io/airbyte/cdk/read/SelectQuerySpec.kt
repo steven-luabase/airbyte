@@ -2,7 +2,7 @@
 package io.airbyte.cdk.read
 
 import com.fasterxml.jackson.databind.JsonNode
-import io.airbyte.cdk.discover.Field
+import io.airbyte.cdk.discover.FieldOrMetaField
 import java.math.BigDecimal
 
 /**
@@ -21,19 +21,19 @@ data class SelectQuerySpec(
 )
 
 sealed interface SelectNode {
-    val columns: List<Field>
+    val columns: List<FieldOrMetaField>
 }
 
 data class SelectColumns(
-    override val columns: List<Field>,
+    override val columns: List<FieldOrMetaField>,
 ) : SelectNode {
-    constructor(vararg columns: Field) : this(columns.toList())
+    constructor(vararg columns: FieldOrMetaField) : this(columns.toList())
 }
 
 data class SelectColumnMaxValue(
-    val column: Field,
+    val column: FieldOrMetaField,
 ) : SelectNode {
-    override val columns: List<Field>
+    override val columns: List<FieldOrMetaField>
         get() = listOf(column)
 }
 
@@ -85,41 +85,41 @@ data class Or(
 }
 
 sealed interface WhereClauseLeafNode : WhereClauseNode {
-    val column: Field
+    val column: FieldOrMetaField
     val bindingValue: JsonNode
 }
 
 data class GreaterOrEqual(
-    override val column: Field,
+    override val column: FieldOrMetaField,
     override val bindingValue: JsonNode,
 ) : WhereClauseLeafNode
 
 data class Greater(
-    override val column: Field,
+    override val column: FieldOrMetaField,
     override val bindingValue: JsonNode,
 ) : WhereClauseLeafNode
 
 data class LesserOrEqual(
-    override val column: Field,
+    override val column: FieldOrMetaField,
     override val bindingValue: JsonNode,
 ) : WhereClauseLeafNode
 
 data class Lesser(
-    override val column: Field,
+    override val column: FieldOrMetaField,
     override val bindingValue: JsonNode,
 ) : WhereClauseLeafNode
 
 data class Equal(
-    override val column: Field,
+    override val column: FieldOrMetaField,
     override val bindingValue: JsonNode,
 ) : WhereClauseLeafNode
 
 sealed interface OrderByNode
 
 data class OrderBy(
-    val columns: List<Field>,
+    val columns: List<FieldOrMetaField>,
 ) : OrderByNode {
-    constructor(vararg columns: Field) : this(columns.toList())
+    constructor(vararg columns: FieldOrMetaField) : this(columns.toList())
 }
 
 data object NoOrderBy : OrderByNode

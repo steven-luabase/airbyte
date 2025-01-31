@@ -3,7 +3,7 @@ package io.airbyte.cdk.read
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
-import io.airbyte.cdk.discover.Field
+import io.airbyte.cdk.discover.FieldOrMetaField
 import io.airbyte.cdk.jdbc.JdbcConnectionFactory
 import io.airbyte.cdk.jdbc.JdbcFieldType
 import io.airbyte.cdk.util.Jsons
@@ -39,7 +39,7 @@ interface SelectQuerier {
 
     interface ResultRow {
         val data: ObjectNode
-        val changes: Map<Field, FieldValueChange>
+        val changes: Map<FieldOrMetaField, FieldValueChange>
     }
 }
 
@@ -55,7 +55,7 @@ class JdbcSelectQuerier(
 
     data class ResultRow(
         override var data: ObjectNode = Jsons.objectNode(),
-        override var changes: MutableMap<Field, FieldValueChange> = mutableMapOf(),
+        override var changes: MutableMap<FieldOrMetaField, FieldValueChange> = mutableMapOf(),
     ) : SelectQuerier.ResultRow
 
     class Result(
